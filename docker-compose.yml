@@ -1,0 +1,39 @@
+version: '3'
+services:
+  psm-validate:
+    build:
+      context: ./psm-validate/app
+    ports:
+      - "8080:8080"
+
+  psm-pkg:
+    build:
+      context: ./psm-pkg/app
+    ports:
+      - "8090:8090"
+
+  postgres:
+    image: postgres:13.10-alpine
+    environment:
+      POSTGRES_DB: psm-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+    ports:
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3.8.24-management
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: default
+    ports:
+      - "5672:5672"
+      - "15672:15672"
